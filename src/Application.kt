@@ -47,8 +47,9 @@ fun Application.module(testing: Boolean = false) {
     install(CallLogging)
 
     routing {
+
+        val clients = Collections.synchronizedSet(LinkedHashSet<ChatClient>())
         webSocket("/chat"){
-            val clients = Collections.synchronizedSet(LinkedHashSet<ChatClient>())
             val client = ChatClient(this)
             clients += client
             call.application.environment.log.info("${client.name}: connected.")
